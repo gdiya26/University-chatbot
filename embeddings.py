@@ -64,106 +64,6 @@ class VectorStoreBuilder:
 
         print(f"📚 Loaded {len(documents)} documents")
         return documents
-
-    # def load_documents(self):
-    #     documents = []
-    #     json_file = os.path.join(self.data_dir, "all_data.json")
-    #     if os.path.exists(json_file):
-    #         with open(json_file, 'r', encoding='utf-8') as f:
-    #             data = json.load(f)
-    #             for item in data:
-    #                 doc = Document(
-    #                     page_content=item['content'],
-    #                     metadata={'source': item['url'], 'title': item['title']}
-    #                 )
-    #                 documents.append(doc)
-    #     else:
-    #         for filename in os.listdir(self.data_dir):
-    #             filepath = os.path.join(self.data_dir, filename)
-    #             if filename.endswith('.txt'):
-    #                 with open(filepath, 'r', encoding='utf-8') as f:
-    #                     content = f.read()
-    #                     documents.append(Document(page_content=content, metadata={'source': filename}))
-    #             elif filename.endswith('.pdf'):
-    #                 loader = PyPDFLoader(filepath)
-    #                 documents.extend(loader.load())
-    #             elif filename.endswith('.pptx'):
-    #                 loader = UnstructuredPowerPointLoader(filepath)
-    #                 documents.extend(loader.load())
-
-    #     print(f"📚 Loaded {len(documents)} documents")
-    #     return documents
-   
-    # def load_documents(self):
-    #     """Load all text files from data directory"""
-    #     documents = []
-        
-    #     # Load from JSON if available
-    #     json_file = os.path.join(self.data_dir, "all_data.json")
-    #     if os.path.exists(json_file):
-    #         with open(json_file, 'r', encoding='utf-8') as f:
-    #             data = json.load(f)
-    #             for item in data:
-    #                 doc = Document(
-    #                     page_content=item['content'],
-    #                     metadata={
-    #                         'source': item['url'],
-    #                         'title': item['title']
-    #                     }
-    #                 )
-    #                 documents.append(doc)
-    #     else:
-    #         # Load from individual text files
-    #         for filename in os.listdir(self.data_dir):
-    #             filepath = os.path.join(self.data_dir, filename)
-
-    #             if filename.endswith('.txt'):
-    #                 with open(filepath, 'r', encoding='utf-8') as f:
-    #                     content = f.read()
-    #             elif filename.endswith('.pdf'):
-    #                 from PyPDF2 import PdfReader
-    #                 content = ""
-    #                 try:
-    #                     reader = PdfReader(filepath)
-    #                     for page in reader.pages:
-    #                         content += page.extract_text() + "\n"
-    #                 except:
-    #                     print(f"⚠️ Could not read PDF: {filename}")
-    #                     continue
-    #             elif filename.endswith('.pptx'):
-    #                 from pptx import Presentation
-    #                 content = ""
-    #                 try:
-    #                     prs = Presentation(filepath)
-    #                     for slide in prs.slides:
-    #                         for shape in slide.shapes:
-    #                             if hasattr(shape, "text"):
-    #                                 content += shape.text + "\n"
-    #                 except:
-    #                     print(f"⚠️ Could not read PPTX: {filename}")
-    #                     continue
-    #             else:
-    #                 continue  # skip other file types
-
-    #             if content.strip():  # only add if content is not empty
-    #                 doc = Document(
-    #                     page_content=content,
-    #                     metadata={'source': filename}
-    #                 )
-    #                 documents.append(doc)
-    #         # for filename in os.listdir(self.data_dir):
-    #         #     if filename.endswith('.txt'):
-    #         #         filepath = os.path.join(self.data_dir, filename)
-    #         #         with open(filepath, 'r', encoding='utf-8') as f:
-    #         #             content = f.read()
-    #         #             doc = Document(
-    #         #                 page_content=content,
-    #         #                 metadata={'source': filename}
-    #         #             )
-    #         #             documents.append(doc)
-        
-    #     print(f"📚 Loaded {len(documents)} documents")
-    #     return documents
     
     def split_documents(self, documents):
         """Split documents into chunks"""
@@ -243,4 +143,5 @@ if __name__ == "__main__":
         for i, doc in enumerate(results, 1):
             print(f"\n--- Result {i} ---")
             print(f"Source: {doc.metadata.get('source', 'Unknown')}")
+
             print(f"Content preview: {doc.page_content[:200]}...")
