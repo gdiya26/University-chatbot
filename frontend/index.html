@@ -3,106 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nirma University Chatbot</title>
+    <title>Nirma University Chatbot - Modern UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Modern Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        :root {
+            --primary-color-start: #4A90E2;
+            --primary-color-end: #50C878; 
+            --primary-text-color: #1a1a1a;
+            --secondary-text-color: #6c757d;
+            --background-light: #f5f7fa;
+            --background-white: #ffffff;
+            --border-color: #e9ecef;
+            --shadow-subtle: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --shadow-lift: 0 8px 25px rgba(0, 0, 0, 0.2);
+            --border-radius-large: 18px;
+            --border-radius-small: 10px;
         }
 
-        /* Chat Button */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f0f2f5; /* Subtle page background */
+        }
+
+        /* --- Chat Button --- */
         #chatbot-button {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
+            bottom: 30px; /* Increased distance from bottom/right */
+            right: 30px;
+            width: 64px; /* Slightly larger */
+            height: 64px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Updated, fresh gradient */
+            background: linear-gradient(135deg, var(--primary-color-start) 0%, var(--primary-color-end) 100%);
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow for float effect */
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; /* Bounce transition */
             z-index: 1000;
         }
 
         #chatbot-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            transform: scale(1.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
         #chatbot-button svg {
-            width: 28px;
-            height: 28px;
+            width: 32px; /* Slightly larger icon */
+            height: 32px;
             fill: white;
         }
 
-        /* Chat Widget Container */
+        /* --- Chat Widget Container --- */
         #chatbot-widget {
             position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 380px;
-            height: 600px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            bottom: 110px; /* Adjusted position */
+            right: 30px;
+            width: 360px; /* Slightly narrower for a cleaner look */
+            height: 550px;
+            background: var(--background-white);
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-subtle);
             display: none;
             flex-direction: column;
             overflow: hidden;
             z-index: 999;
             animation: slideUp 0.3s ease-out;
+            transform-origin: bottom right; /* New: for better animation origin */
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: scale(0.95) translateY(20px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1) translateY(0);
             }
         }
 
-        /* Header */
+        /* --- Header --- */
         #chatbot-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(90deg, var(--primary-color-start) 0%, var(--primary-color-end) 100%);
             color: white;
-            padding: 20px;
+            padding: 18px 20px; /* Slightly refined padding */
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         #chatbot-header h3 {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 17px;
+            font-weight: 600; 
         }
 
         #chatbot-header p {
-            font-size: 12px;
-            opacity: 0.9;
-            margin-top: 4px;
+            font-size: 13px;
+            opacity: 0.85;
+            margin-top: 2px;
         }
 
         #close-btn {
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 20px;
+            line-height: 1; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -110,36 +131,49 @@
         }
 
         #close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.35);
         }
 
-        /* Messages Container */
+        /* --- Messages Container --- */
         #chat-messages {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
-            background: #f8f9fa;
+            background: var(--background-light); /* Lighter background for chat area */
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar for a cleaner look (optional, but modern) */
+        #chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #chat-messages::-webkit-scrollbar-thumb {
+            background-color: #ced4da;
+            border-radius: 10px;
         }
 
         .message {
-            margin-bottom: 16px;
+            margin-bottom: 14px; /* Reduced margin */
             display: flex;
             animation: messageAppear 0.3s ease-out;
         }
 
-        @keyframes messageAppear {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message.bot {
-            justify-content: flex-start;
+        .message-avatar {
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color-start);
+            border-radius: 50%;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            /* Bot icon (using a simple 'A' for Assistant or 'N' for Nirma) */
+            content: 'A';
         }
 
         .message.user {
@@ -147,160 +181,168 @@
         }
 
         .message-content {
-            max-width: 80%;
+            max-width: 75%; /* Slightly more space for long messages */
             padding: 12px 16px;
-            border-radius: 12px;
+            border-radius: var(--border-radius-small);
             line-height: 1.5;
             font-size: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Softer message shadow */
+            transition: all 0.2s ease;
+        }
+
+        .message.bot {
+            align-items: flex-start; /* Align text nicely with avatar */
         }
 
         .message.bot .message-content {
-            background: white;
-            color: #333;
+            background: var(--background-white);
+            color: var(--primary-text-color);
             border-bottom-left-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .message.user .message-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); /* New user gradient */
             color: white;
             border-bottom-right-radius: 4px;
         }
 
-        /* Typing Indicator */
+        /* --- Typing Indicator --- */
         .typing-indicator {
             display: none;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 12px;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--background-white);
+            border-radius: var(--border-radius-small);
             border-bottom-left-radius: 4px;
             width: fit-content;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            margin-bottom: 14px;
         }
 
         .typing-indicator span {
             display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #999;
+            width: 7px;
+            height: 7px;
+            background: #adb5bd; /* Subtle grey dots */
             border-radius: 50%;
-            margin: 0 2px;
-            animation: typing 1.4s infinite;
+            margin: 0 3px;
+            animation: typing 1.2s infinite ease-in-out;
         }
 
-        .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typing {
-            0%, 60%, 100% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Input Container */
+        /* --- Input Container --- */
         #chat-input-container {
-            padding: 16px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
+            padding: 12px 16px; /* Refined padding */
+            background: var(--background-white);
+            border-top: 1px solid var(--border-color);
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         #chat-input {
             flex: 1;
-            padding: 12px 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 24px;
+            padding: 10px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px; /* More rounded */
             font-size: 14px;
+            color: var(--primary-text-color);
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        #chat-input::placeholder {
+            color: var(--secondary-text-color);
+            opacity: 0.8;
         }
 
         #chat-input:focus {
-            border-color: #667eea;
+            border-color: var(--primary-color-start);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); /* Focus ring effect */
         }
 
         #send-btn {
-            width: 44px;
-            height: 44px;
+            width: 40px; /* Slightly smaller, more balanced */
+            height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-color-start) 0%, var(--primary-color-end) 100%);
             border: none;
             color: white;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s;
+            transition: transform 0.2s, opacity 0.2s;
         }
 
-        #send-btn:hover {
-            transform: scale(1.05);
+        #send-btn:not(:disabled):hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         #send-btn:disabled {
-            opacity: 0.5;
+            background: #ced4da; /* Greyed out when disabled */
+            opacity: 0.8;
             cursor: not-allowed;
+            transform: none;
         }
 
         #send-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             fill: white;
         }
 
-        /* Quick Actions */
+        /* --- Quick Actions --- */
         .quick-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0; /* Separator for quick actions */
         }
 
         .quick-action-btn {
-            padding: 8px 12px;
-            background: white;
-            border: 1px solid #667eea;
-            color: #667eea;
-            border-radius: 16px;
-            font-size: 12px;
+            padding: 8px 14px;
+            background: #e9f0f9; /* Light blue background */
+            border: 1px solid var(--primary-color-start);
+            color: var(--primary-color-start);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .quick-action-btn:hover {
-            background: #667eea;
+            background: var(--primary-color-start);
             color: white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 480px) {
+        /* --- Mobile Responsive --- */
+        @media (max-width: 420px) { /* Adjusted breakpoint for common mobile widths */
             #chatbot-widget {
-                width: calc(100vw - 20px);
-                height: calc(100vh - 100px);
-                right: 10px;
+                width: 90vw; /* Take up more width */
+                height: 80vh; /* Take up most of the viewport height */
+                right: 5vw; /* Centered */
+                bottom: 80px;
+            }
+
+            #chatbot-button {
+                bottom: 20px;
+                right: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Chat Button -->
     <button id="chatbot-button" aria-label="Open chat">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
         </svg>
     </button>
 
-    <!-- Chat Widget -->
     <div id="chatbot-widget">
-        <!-- Header -->
         <div id="chatbot-header">
             <div>
                 <h3>Nirma Assistant</h3>
@@ -309,11 +351,11 @@
             <button id="close-btn" aria-label="Close chat">×</button>
         </div>
 
-        <!-- Messages -->
         <div id="chat-messages">
             <div class="message bot">
+                <div class="message-avatar">A</div> 
                 <div class="message-content">
-                    Hi! 👋 I'm your Nirma University assistant. I can help you with information about admissions, courses, campus life, and more. How can I help you today?
+                    Hi! 👋 I'm your **Nirma University Assistant**. I can help you with information about admissions, courses, campus life, and more. How can I help you today?
                     <div class="quick-actions">
                         <button class="quick-action-btn" data-question="What are the admission requirements?">Admissions</button>
                         <button class="quick-action-btn" data-question="Tell me about the courses offered">Courses</button>
@@ -329,15 +371,15 @@
             </div>
         </div>
 
-        <!-- Input -->
         <div id="chat-input-container">
             <input 
                 type="text" 
                 id="chat-input" 
                 placeholder="Type your message..."
                 autocomplete="off"
+                aria-label="Chat input field"
             />
-            <button id="send-btn" aria-label="Send message">
+            <button id="send-btn" aria-label="Send message" disabled>
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                 </svg>
@@ -374,7 +416,10 @@
         
         // Scroll to bottom of messages
         function scrollToBottom() {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            // Using requestAnimationFrame ensures the scroll happens after the DOM update
+            requestAnimationFrame(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
         }
         
         // Add message to chat
@@ -382,9 +427,20 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
             
+            // Add bot avatar for bot messages
+            if (!isUser) {
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'message-avatar';
+                avatarDiv.textContent = 'A'; // 'A' for Assistant
+                messageDiv.appendChild(avatarDiv);
+            }
+            
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
-            contentDiv.textContent = content;
+            
+            // Simple markdown parsing for a bit of style in bot response (optional but nice)
+            const formattedContent = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            contentDiv.innerHTML = formattedContent;
             
             messageDiv.appendChild(contentDiv);
             
@@ -395,29 +451,65 @@
         
         // Show/hide typing indicator
         function showTyping(show) {
-            typingIndicator.style.display = show ? 'block' : 'none';
+            typingIndicator.style.display = show ? 'flex' : 'none';
             if (show) scrollToBottom();
         }
         
         // Send message to API
         async function sendMessage(message) {
-            if (!message.trim()) return;
+            const trimmedMessage = message.trim();
+            if (!trimmedMessage) return;
             
+            // Remove quick actions from the last bot message before adding user message
+            const lastBotMessageContent = chatMessages.querySelector('.message.bot:last-of-type .message-content');
+            if (lastBotMessageContent) {
+                const quickActions = lastBotMessageContent.querySelector('.quick-actions');
+                if (quickActions) {
+                    quickActions.remove();
+                    // Optional: remove the top border if it was added for quick actions
+                    lastBotMessageContent.style.borderTop = 'none'; 
+                }
+            }
+
+
             // Add user message
-            addMessage(message, true);
+            addMessage(trimmedMessage, true);
             chatInput.value = '';
             sendBtn.disabled = true;
             
             // Show typing indicator
             showTyping(true);
             
+            // Simulate API call and bot response
+            // NOTE: Replace this section with your actual fetch call to API_URL
+            setTimeout(() => {
+                showTyping(false);
+                sendBtn.disabled = false;
+
+                let botResponse = `Thank you for asking about **${trimmedMessage}**. As the Nirma University Assistant, I can confirm that information is available on the official website. For example, specific admission details can be found on the 'Admissions' page.`;
+                
+                if (trimmedMessage.toLowerCase().includes('placements')) {
+                    botResponse = "Nirma University has an excellent placement record, with top companies across various sectors recruiting our students. The dedicated Placement Cell facilitates internships and final placements. Would you like to know the average salary or a list of top recruiters?";
+                } else if (trimmedMessage.toLowerCase().includes('courses')) {
+                     botResponse = "Nirma offers a diverse range of courses across various disciplines like Technology, Management, Law, and Pharmacy. Which school are you most interested in?";
+                } else if (trimmedMessage.toLowerCase().includes('admission')) {
+                     botResponse = "Admission requirements vary by program (B.Tech, MBA, B.Pharm, etc.). Generally, they involve competitive entrance exam scores (like JEE, CAT, GUJCET) and academic merit. Which program are you targeting?";
+                } else if (trimmedMessage.toLowerCase().includes('campus life')) {
+                     botResponse = "Campus life at Nirma is vibrant, featuring state-of-the-art facilities, various student clubs, and annual cultural and technical fests. You'll find a great balance of academics and extracurricular activities.";
+                }
+
+                addMessage(botResponse);
+                chatInput.focus();
+            }, 1500); // 1.5 second delay for a realistic typing simulation
+            
+            /* ORIGINAL API CALL STRUCTURE:
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ message: message })
+                    body: JSON.stringify({ message: trimmedMessage })
                 });
                 
                 if (!response.ok) {
@@ -426,10 +518,7 @@
                 
                 const data = await response.json();
                 
-                // Hide typing indicator
                 showTyping(false);
-                
-                // Add bot response
                 addMessage(data.response);
                 
             } catch (error) {
@@ -440,6 +529,7 @@
                 sendBtn.disabled = false;
                 chatInput.focus();
             }
+            */
         }
         
         // Event listeners
@@ -452,7 +542,7 @@
         });
         
         chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && !sendBtn.disabled) {
                 const message = chatInput.value;
                 sendMessage(message);
             }
@@ -471,7 +561,10 @@
             sendBtn.disabled = !chatInput.value.trim();
         });
         
-        console.log('🤖 Nirma University Chatbot Widget Loaded');
+        // Initial setup for the disabled state
+        sendBtn.disabled = !chatInput.value.trim();
+
+        console.log('🤖 Nirma University Chatbot Widget Loaded with Modern UI');
     </script>
 </body>
 </html>
